@@ -10,7 +10,7 @@ import gradio as gr
 import httpcore
 from EdgeGPT import Chatbot, ConversationStyle
 
-cookiePath = r"C:\cookiePath"  # 填写存放Bing的cookies目录
+cookiePath = r"C:\cookiePath"  # 填写存放Bing的cookie目录
 cookieList = [_ for _ in Path(cookiePath).iterdir()]
 cookieDict = {}  # {IP: [bot, Bing]}
 IP = ""
