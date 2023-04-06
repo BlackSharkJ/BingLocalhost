@@ -1,11 +1,11 @@
 # BingLocalhost
-本项目基于EdgeGPT和gradio这两个Python库，把Bing部署在本地局域网，一台电脑开代理，其他设备也能使，轻松简单。
+本项目基于EdgeGPT和gradio，把Bing部署在本地局域网，一台电脑开代理，其他设备也能使，轻松简单。
 
 不会整前端，CSS抄了几行[
 ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅
 
 # 1. 基础准备
-- 安装[gradio](https://github.com/gradio-app/gradio)和[EdgeGPT](https://github.com/acheong08/EdgeGPT)
+- 安装[gradio](https://github.com/gradio-app/gradio)和[EdgeGPT](https://github.com/acheong08/EdgeGPT)这两个Python库
 
 - 安装python 3.10+ or 您的python版本低于3.10，请修改main.py中的change_question函数。
 
