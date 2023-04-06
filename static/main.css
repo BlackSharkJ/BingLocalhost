@@ -1,0 +1,33 @@
+/* 屏幕宽度大于等于500px的设备 */
+@media screen and (min-width: 500px) {
+    #chat_window {
+        height: calc(80vh - 150px);
+    }
+    #chat_window .wrap {
+        max-height: calc(80vh - 150px - var(--line-sm)*1rem - 2*var(--block-label-margin) );
+    }
+}
+/* 屏幕宽度小于500px的设备 */
+@media screen and (max-width: 499px) {
+    #chat_window {
+        height: calc(70vh - 180px);
+    }
+    #chat_window .wrap {
+        max-height: calc(70vh - 180px - var(--line-sm)*1rem - 2*var(--block-label-margin) );
+    }
+}
+
+#chat_window .user {
+    text-align: right
+}
+
+#user_input {
+  height: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+footer.svelte-1lyswbr.svelte-1lyswbr.svelte-1lyswbr {
+    display: none;
+}
+
