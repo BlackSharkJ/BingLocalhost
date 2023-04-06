@@ -8,12 +8,12 @@
 
 - 中国用户需要科学上网手段
 
-- 需要有可使用New Bing的账号，导出Cookies的方法请看[EdgeGPT](https://github.com/acheong08/EdgeGPT)
+- 需要有可使用New Bing的账号，导出Cookie的方法请看[EdgeGPT](https://github.com/acheong08/EdgeGPT)
 
 # 2. 下载本项目文件
 
-# 3. 配置Bing Cookies
-打开main.py，把存放Cookies的路径地址粘贴上去
+# 3. 配置Bing Cookie
+打开main.py，把存放Cookie的路径地址粘贴上去
 
 # 4. 运行main.py
 支持电脑和手机
