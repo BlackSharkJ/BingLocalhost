@@ -119,7 +119,7 @@ with gr.Blocks(css=my_css) as demo:
             return history + [[None, "好的我会更有精确性，让我们重新开始"]]
 
     # 绑定chat_style选择时的事件
-    chat_style.select(fn=change_style, inputs=[chat_style, chatbot], outputs=chatbot)
+    chat_style.change(fn=change_style, inputs=[chat_style, chatbot], outputs=chatbot)
 
     # 用户输入的回调函数
     def user(user_message, history, choice, request: gr.Request):
