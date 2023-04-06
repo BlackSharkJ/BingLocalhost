@@ -16,5 +16,4 @@
 # 4. 运行main.py
 支持电脑和手机
 
-# 效果图
 ![preview](/preview.png)
