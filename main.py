@@ -10,7 +10,7 @@ import gradio as gr
 import httpcore
 from EdgeGPT import Chatbot, ConversationStyle
 
-cookiePath = r"C:\cookiePath"  # 填写存放Bing的cookie目录
+cookiePath = r"./cookiePath"  # 填写存放Bing的cookies目录
 cookieList = [_ for _ in Path(cookiePath).iterdir()]
 cookieDict = {}  # {IP: [bot, Bing]}
 IP = ""
@@ -217,8 +217,18 @@ with gr.Blocks(css=my_css) as demo:
     btn.click(
         fn=user, inputs=[msg, chatbot, chat_style], outputs=[msg, chatbot], queue=False
     ).then(fn=bing, inputs=chatbot, outputs=chatbot, queue=False)
+
+    def clean():
+        return (
+            gr.Button.update(value="你好，Bing。让我们用中文交流。"),
+            gr.Button.update(value="你好，Bing。你可以帮我做什么？"),
+            gr.Button.update(value="你好，Bing。帮我搜索最近的新闻。"),
+        )
+
     # 将清除按钮绑定到 clear.click() 方法上
-    clear.click(lambda: None, None, chatbot, queue=False)
+    clear.click(lambda: None, None, chatbot, queue=False).then(
+        fn=clean, inputs=[], outputs=[question1, question2, question3]
+    )
 
 if __name__ == "__main__":
     # demo.queue(concurrency_count=9)
