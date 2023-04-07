@@ -18,8 +18,6 @@ def postprocess(
     if y is None or y == []:
         return []
     user, bot = y[-1]
-    print(user)
-    print(bot)
     if user:
         if not detect_converted_mark(user):
             user = convert_asis(user)
