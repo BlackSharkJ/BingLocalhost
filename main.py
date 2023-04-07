@@ -63,8 +63,8 @@ async def get_message(message):
                 f"""<a href={quote[:s]} target="_blank">[{count}]: {quote[s+2:-1]}</a>"""
             )
             count += 1
-        quotes = "\n".join(quotes_)
-        body += "\n了解详细信息：\n" + quotes
+        quotes = "<br>".join(quotes_)
+        body += "\n<br>了解详细信息：<br>" + quotes
     else:
         body = ""
     body = re.sub(r"\[\^(\d+)\^\]", "", body)
