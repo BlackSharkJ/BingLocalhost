@@ -39,10 +39,13 @@ async def get_message(message):
         ]
     except KeyError:
         association = []
-
+    except IndexError:
+        association = []
     try:
         quotes = rs["item"]["messages"][1]["adaptiveCards"][0]["body"]
     except KeyError:
+        quotes = []
+    except IndexError:
         quotes = []
 
     if quotes.__len__() == 1:
@@ -186,7 +189,7 @@ with gr.Blocks(css=my_css) as demo:
                 )
             case _:
                 return (
-                    gr.Button.update(value=QUESTION[1], visible=True),
+                    gr.Button.update(value=QUESTION[0], visible=True),
                     gr.Button.update(value=QUESTION[1], visible=True),
                     gr.Button.update(value=QUESTION[2], visible=True),
                 )
@@ -220,12 +223,16 @@ with gr.Blocks(css=my_css) as demo:
     # 将用户输入和机器人回复绑定到 msg.submit() 方法上
     msg.submit(
         fn=user, inputs=[msg, chatbot, chat_style], outputs=[msg, chatbot], queue=False
-    ).then(fn=bing, inputs=chatbot, outputs=chatbot, queue=False)
+    ).then(fn=bing, inputs=chatbot, outputs=chatbot, queue=False).then(
+        fn=change_question, inputs=[], outputs=[question1, question2, question3]
+    )
 
     # 发送按钮的事件
     btn.click(
         fn=user, inputs=[msg, chatbot, chat_style], outputs=[msg, chatbot], queue=False
-    ).then(fn=bing, inputs=chatbot, outputs=chatbot, queue=False)
+    ).then(fn=bing, inputs=chatbot, outputs=chatbot, queue=False).then(
+        fn=change_question, inputs=[], outputs=[question1, question2, question3]
+    )
 
     def clean():
         return (
