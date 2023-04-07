@@ -15,7 +15,7 @@ cookieList = [_ for _ in Path(cookiePath).iterdir()]
 cookieDict = {}  # {IP: [bot, Bing]}
 IP = ""
 QUESTION = []
-
+NumUserMessagesInConversation = []  # [max,Num]
 gr.Chatbot.postprocess = postprocess
 # 读取css文件
 with open("./static/main.css", "r", encoding="utf-8") as f:
@@ -26,21 +26,19 @@ async def get_message(message):
     """
     从Bing请求数据.
     """
+    global QUESTION, NumUserMessagesInConversation
     try:
         rs = await cookieDict[IP][1](prompt=message)
     except httpcore.ConnectTimeout as exc:
         return ["请求失败，请重试……", []]
     except Exception as exc:
         return ["请求失败，请重试……", []]
-
     try:
-        association = [
-            _["text"] for _ in rs["item"]["messages"][1]["suggestedResponses"]
-        ]
+        QUESTION = [_["text"] for _ in rs["item"]["messages"][1]["suggestedResponses"]]
     except KeyError:
-        association = []
+        QUESTION = []
     except IndexError:
-        association = []
+        QUESTION = []
     try:
         quotes = rs["item"]["messages"][1]["adaptiveCards"][0]["body"]
     except KeyError:
@@ -71,7 +69,11 @@ async def get_message(message):
     else:
         body = ""
     body = re.sub(r"\[\^(\d+)\^\]", "", body)
-    return [body, association]
+    NumUserMessagesInConversation = [
+        rs["item"]["throttling"]["maxNumUserMessagesInConversation"],
+        rs["item"]["throttling"]["numUserMessagesInConversation"],
+    ]
+    return body
 
 
 # 创建一个 Gradio Blocks 对象
@@ -104,10 +106,9 @@ with gr.Blocks(css=my_css) as demo:
 
     # chat_style改变时的事件
     def change_style(choice, history, request: gr.Request):
-        global IP
+        global cookieList, cookieDict, IP
         IP = request.client.host
-        if IP not in cookieDict:
-            cookieDict[IP] = [Chatbot(random.choice(cookieList)), None]
+        cookieDict[IP] = [Chatbot(random.choice(cookieList)), None]
         if choice == "🥳更有创造性":
             cookieDict[IP][1] = partial(
                 cookieDict[IP][0].ask, conversation_style=ConversationStyle.creative
@@ -125,7 +126,26 @@ with gr.Blocks(css=my_css) as demo:
             return history + [[None, "好的我会更有精确性，让我们重新开始"]]
 
     # 绑定chat_style选择时的事件
-    chat_style.change(fn=change_style, inputs=[chat_style, chatbot], outputs=chatbot)
+    chat_style.change(fn=change_style, inputs=[chat_style, chatbot], outputs=[chatbot])
+
+    def bot_login(choice):
+        """
+        注册bot
+        """
+        global cookieList, cookieDict, IP
+        cookieDict[IP] = [Chatbot(random.choice(cookieList)), None]
+        if choice == "🥳更有创造性":
+            cookieDict[IP][1] = partial(
+                cookieDict[IP][0].ask, conversation_style=ConversationStyle.creative
+            )
+        elif choice == "😊两者间平衡":
+            cookieDict[IP][1] = partial(
+                cookieDict[IP][0].ask, conversation_style=ConversationStyle.balanced
+            )
+        else:
+            cookieDict[IP][1] = partial(
+                cookieDict[IP][0].ask, conversation_style=ConversationStyle.precise
+            )
 
     # 用户输入的回调函数
     def user(user_message, history, choice, request: gr.Request):
@@ -137,39 +157,34 @@ with gr.Blocks(css=my_css) as demo:
             return "", history
         IP = request.client.host
         if IP not in cookieDict:
-            cookieDict[IP] = [Chatbot(random.choice(cookieList)), None]
-            if choice == "🥳更有创造性":
-                cookieDict[IP][1] = partial(
-                    cookieDict[IP][0].ask, conversation_style=ConversationStyle.creative
-                )
-            elif choice == "😊两者间平衡":
-                cookieDict[IP][1] = partial(
-                    cookieDict[IP][0].ask, conversation_style=ConversationStyle.balanced
-                )
-            else:
-                cookieDict[IP][1] = partial(
-                    cookieDict[IP][0].ask, conversation_style=ConversationStyle.precise
-                )
+            bot_login(choice)
         return "", history + [[user_message, None]]
 
     # 机器人回复的回调函数
     def bing(history):
-        global QUESTION
         if history:
             user_message = history[-1][0]
             # bot_message = random.choice(["# Yes", "## No"])
             # bot_message = [r'<a href="www.baidu.com">百度</a>']
             bot_message = asyncio.run(get_message(user_message))
             # bot_message = ['1', ['1','2','3']]
-            history[-1][1] = bot_message[0]
-            QUESTION = bot_message[1]
+            history[-1][1] = bot_message
         return history
 
-    def change_question():
+    def change_question(choice, history):
         """
         更改快速选项
         """
-        global QUESTION
+        global QUESTION, NumUserMessagesInConversation
+        if NumUserMessagesInConversation:
+            if NumUserMessagesInConversation[1] >= NumUserMessagesInConversation[0]:
+                bot_login(choice)
+                return (
+                    history + [[None, "我们的聊天达到了次数限制，让我们重新开始"]],
+                    gr.Button.update(value="你好，Bing。你可以帮我做什么？", visible=True),
+                    gr.Button.update(value="你好，Bing。请随便写一首诗。", visible=True),
+                    gr.Button.update(value="你好，Bing。帮我搜索最近的新闻。", visible=True),
+                )
         match len(QUESTION):
             case 0:
                 gr.Button.update(visible=False), gr.Button.update(
@@ -177,18 +192,21 @@ with gr.Blocks(css=my_css) as demo:
                 ), gr.Button.update(visible=False)
             case 1:
                 return (
+                    history,
                     gr.Button.update(value=QUESTION[0], visible=True),
                     gr.Button.update(visible=False),
                     gr.Button.update(visible=False),
                 )
             case 2:
                 return (
+                    history,
                     gr.Button.upda1te(value=QUESTION[0], visible=True),
                     gr.Button.update(value=QUESTION[1], visible=True),
                     gr.Button.update(visible=False),
                 )
             case _:
                 return (
+                    history,
                     gr.Button.update(value=QUESTION[0], visible=True),
                     gr.Button.update(value=QUESTION[1], visible=True),
                     gr.Button.update(value=QUESTION[2], visible=True),
@@ -201,7 +219,9 @@ with gr.Blocks(css=my_css) as demo:
         outputs=[msg, chatbot],
         queue=False,
     ).then(fn=bing, inputs=[chatbot], outputs=[chatbot], queue=False).then(
-        fn=change_question, inputs=[], outputs=[question1, question2, question3]
+        fn=change_question,
+        inputs=[chat_style, chatbot],
+        outputs=[chatbot, question1, question2, question3],
     )
     question2.click(
         fn=user,
@@ -209,7 +229,9 @@ with gr.Blocks(css=my_css) as demo:
         outputs=[msg, chatbot],
         queue=False,
     ).then(fn=bing, inputs=chatbot, outputs=chatbot, queue=False).then(
-        fn=change_question, inputs=[], outputs=[question1, question2, question3]
+        fn=change_question,
+        inputs=[chat_style, chatbot],
+        outputs=[chatbot, question1, question2, question3],
     )
     question3.click(
         fn=user,
@@ -217,33 +239,48 @@ with gr.Blocks(css=my_css) as demo:
         outputs=[msg, chatbot],
         queue=False,
     ).then(fn=bing, inputs=chatbot, outputs=chatbot, queue=False).then(
-        fn=change_question, inputs=[], outputs=[question1, question2, question3]
+        fn=change_question,
+        inputs=[chat_style, chatbot],
+        outputs=[chatbot, question1, question2, question3],
     )
 
     # 将用户输入和机器人回复绑定到 msg.submit() 方法上
     msg.submit(
         fn=user, inputs=[msg, chatbot, chat_style], outputs=[msg, chatbot], queue=False
     ).then(fn=bing, inputs=chatbot, outputs=chatbot, queue=False).then(
-        fn=change_question, inputs=[], outputs=[question1, question2, question3]
+        fn=change_question,
+        inputs=[chat_style, chatbot],
+        outputs=[chatbot, question1, question2, question3],
     )
 
     # 发送按钮的事件
     btn.click(
         fn=user, inputs=[msg, chatbot, chat_style], outputs=[msg, chatbot], queue=False
     ).then(fn=bing, inputs=chatbot, outputs=chatbot, queue=False).then(
-        fn=change_question, inputs=[], outputs=[question1, question2, question3]
+        fn=change_question,
+        inputs=[chat_style, chatbot],
+        outputs=[chatbot, question1, question2, question3],
     )
 
-    def clean():
+    def clean(choice, history):
+        if not history:
+            return (
+                None,
+                gr.Button.update(value="你好，Bing。你可以帮我做什么？", visible=True),
+                gr.Button.update(value="你好，Bing。请随便写一首诗。", visible=True),
+                gr.Button.update(value="你好，Bing。帮我搜索最近的新闻。", visible=True),
+            )
+        bot_login(choice)
         return (
+            [[None, "好的，让我们忘记刚刚聊过的，然后重新开始。"]],
             gr.Button.update(value="你好，Bing。你可以帮我做什么？", visible=True),
             gr.Button.update(value="你好，Bing。请随便写一首诗。", visible=True),
             gr.Button.update(value="你好，Bing。帮我搜索最近的新闻。", visible=True),
         )
 
     # 将清除按钮绑定到 clear.click() 方法上
-    clear.click(lambda: None, None, chatbot, queue=False).then(
-        fn=clean, inputs=[], outputs=[question1, question2, question3]
+    clear.click(
+        fn=clean, inputs=[chat_style, chatbot], outputs=[chatbot, question1, question2, question3]
     )
 
 if __name__ == "__main__":
