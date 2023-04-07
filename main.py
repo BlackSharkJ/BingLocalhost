@@ -2,13 +2,13 @@
 import asyncio
 import random
 import re
-import time
 from functools import partial
 from pathlib import Path
 
 import gradio as gr
 import httpcore
 from EdgeGPT import Chatbot, ConversationStyle
+from utils import postprocess
 
 cookiePath = r"./cookiePath"  # 填写存放Bing的cookies目录
 cookieList = [_ for _ in Path(cookiePath).iterdir()]
@@ -16,6 +16,7 @@ cookieDict = {}  # {IP: [bot, Bing]}
 IP = ""
 QUESTION = []
 
+gr.Chatbot.postprocess = postprocess
 # 读取css文件
 with open("./static/main.css", "r", encoding="utf-8") as f:
     my_css = f.read()
@@ -23,7 +24,7 @@ with open("./static/main.css", "r", encoding="utf-8") as f:
 
 async def get_message(message):
     """
-    从Bing请求数据
+    从Bing请求数据.
     """
     try:
         rs = await cookieDict[IP][1](prompt=message)
@@ -85,8 +86,8 @@ with gr.Blocks(css=my_css) as demo:
     chatbot.style(height="100%")
     # 创建三个备选项
     with gr.Row():
-        question1 = gr.Button("你好，Bing。让我们用中文交流。").style(size="sm")
-        question2 = gr.Button("你好，Bing。你可以帮我做什么？").style(size="sm")
+        question1 = gr.Button("你好，Bing。你可以帮我做什么？").style(size="sm")
+        question2 = gr.Button("你好，Bing。请随便写一首诗。").style(size="sm")
         question3 = gr.Button("你好，Bing。帮我搜索最近的新闻。").style(size="sm")
 
     # 创建一个文本框
@@ -159,7 +160,7 @@ with gr.Blocks(css=my_css) as demo:
             # bot_message = ['1', ['1','2','3']]
             history[-1][1] = bot_message[0]
             QUESTION = bot_message[1]
-            return history
+        return history
 
     def change_question():
         """
@@ -172,10 +173,16 @@ with gr.Blocks(css=my_css) as demo:
                     visible=False
                 ), gr.Button.update(visible=False)
             case 1:
-                return gr.Button.update(value=QUESTION[0])
+                return (
+                    gr.Button.update(value=QUESTION[0]),
+                    gr.Button.update(visible=False),
+                    gr.Button.update(visible=False),
+                )
             case 2:
-                return gr.Button.upda1te(value=QUESTION[0]), gr.Button.update(
-                    value=QUESTION[1]
+                return (
+                    gr.Button.upda1te(value=QUESTION[0]),
+                    gr.Button.update(value=QUESTION[1]),
+                    gr.Button.update(visible=False),
                 )
             case _:
                 return (
@@ -222,8 +229,8 @@ with gr.Blocks(css=my_css) as demo:
 
     def clean():
         return (
-            gr.Button.update(value="你好，Bing。让我们用中文交流。"),
             gr.Button.update(value="你好，Bing。你可以帮我做什么？"),
+            gr.Button.update(value="你好，Bing。请随便写一首诗。"),
             gr.Button.update(value="你好，Bing。帮我搜索最近的新闻。"),
         )
 
