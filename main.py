@@ -14,7 +14,7 @@ cookiePath = r"./cookiePath"  # 填写存放Bing的cookies目录
 cookieList = [_ for _ in Path(cookiePath).iterdir()]
 cookieDict = {}  # {IP: [bot, Bing]}
 IP = ""
-association = []
+QUESTION = []
 
 # 读取css文件
 with open("./static/main.css", "r", encoding="utf-8") as f:
@@ -28,20 +28,20 @@ async def get_message(message):
     try:
         rs = await cookieDict[IP][1](prompt=message)
     except httpcore.ConnectTimeout as exc:
-        return "请求失败，请重试……"
+        return ["请求失败，请重试……", []]
     except Exception as exc:
-        return "请求失败，请重试……"
+        return ["请求失败，请重试……", []]
 
     try:
         association = [
             _["text"] for _ in rs["item"]["messages"][1]["suggestedResponses"]
         ]
-    except:
+    except KeyError:
         association = []
 
     try:
         quotes = rs["item"]["messages"][1]["adaptiveCards"][0]["body"]
-    except:
+    except KeyError:
         quotes = []
 
     if quotes.__len__() == 1:
@@ -64,6 +64,8 @@ async def get_message(message):
             count += 1
         quotes = "\n".join(quotes_)
         body += "\n了解详细信息：\n" + quotes
+    else:
+        body = ""
     body = re.sub(r"\[\^(\d+)\^\]", "", body)
     return [body, association]
 
@@ -148,7 +150,7 @@ with gr.Blocks(css=my_css) as demo:
 
     # 机器人回复的回调函数
     def bing(history):
-        global association
+        global QUESTION
         if history:
             user_message = history[-1][0]
             # bot_message = random.choice(["# Yes", "## No"])
@@ -156,30 +158,30 @@ with gr.Blocks(css=my_css) as demo:
             bot_message = asyncio.run(get_message(user_message))
             # bot_message = ['1', ['1','2','3']]
             history[-1][1] = bot_message[0]
-            association = bot_message[1]
+            QUESTION = bot_message[1]
             return history
 
     def change_question():
         """
         更改快速选项
         """
-        global association
-        match len(association):
+        global QUESTION
+        match len(QUESTION):
             case 0:
                 gr.Button.update(visible=False), gr.Button.update(
                     visible=False
                 ), gr.Button.update(visible=False)
             case 1:
-                return gr.Button.update(value=association[0])
+                return gr.Button.update(value=QUESTION[0])
             case 2:
-                return gr.Button.update(value=association[0]), gr.Button.update(
-                    value=association[1]
+                return gr.Button.upda1te(value=QUESTION[0]), gr.Button.update(
+                    value=QUESTION[1]
                 )
             case _:
                 return (
-                    gr.Button.update(value=association[0]),
-                    gr.Button.update(value=association[1]),
-                    gr.Button.update(value=association[2]),
+                    gr.Button.update(value=QUESTION[1]),
+                    gr.Button.update(value=QUESTION[1]),
+                    gr.Button.update(value=QUESTION[2]),
                 )
 
     # 快速选择时的事件
