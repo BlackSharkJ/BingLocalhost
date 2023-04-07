@@ -6,7 +6,7 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，utils用于解�
 ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅
 
 # 1. 基础准备
-- 安装[gradio](https://github.com/gradio-app/gradio)和[EdgeGPT](https://github.com/acheong08/EdgeGPT)这两个Python库
+- 安装[gradio](https://github.com/gradio-app/gradio)和[EdgeGPT](https://github.com/acheong08/EdgeGPT), [Markdown](https://github.com/Python-Markdown/markdown), [mdtex2html](https://github.com/polarwinkel/mdtex2html)这4个Python库
 
 - 安装python 3.10+ or 您的python版本低于3.10，请修改main.py中的change_question函数。
 
@@ -14,7 +14,7 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅
 
 - 需要有可使用New Bing的账号，导出Cookie的方法请看[EdgeGPT](https://github.com/acheong08/EdgeGPT)
 
-# 2. 下载本项目文件
+# 2. 下载本项目文件mdtex2html
 
 # 3. 配置Bing Cookie
 打开main.py，把存放Cookie的路径地址粘贴上去
