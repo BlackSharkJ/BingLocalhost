@@ -174,21 +174,21 @@ with gr.Blocks(css=my_css) as demo:
                 ), gr.Button.update(visible=False)
             case 1:
                 return (
-                    gr.Button.update(value=QUESTION[0]),
+                    gr.Button.update(value=QUESTION[0], visible=True),
                     gr.Button.update(visible=False),
                     gr.Button.update(visible=False),
                 )
             case 2:
                 return (
-                    gr.Button.upda1te(value=QUESTION[0]),
-                    gr.Button.update(value=QUESTION[1]),
+                    gr.Button.upda1te(value=QUESTION[0], visible=True),
+                    gr.Button.update(value=QUESTION[1], visible=True),
                     gr.Button.update(visible=False),
                 )
             case _:
                 return (
-                    gr.Button.update(value=QUESTION[1]),
-                    gr.Button.update(value=QUESTION[1]),
-                    gr.Button.update(value=QUESTION[2]),
+                    gr.Button.update(value=QUESTION[1], visible=True),
+                    gr.Button.update(value=QUESTION[1], visible=True),
+                    gr.Button.update(value=QUESTION[2], visible=True),
                 )
 
     # 快速选择时的事件
@@ -229,9 +229,9 @@ with gr.Blocks(css=my_css) as demo:
 
     def clean():
         return (
-            gr.Button.update(value="你好，Bing。你可以帮我做什么？"),
-            gr.Button.update(value="你好，Bing。请随便写一首诗。"),
-            gr.Button.update(value="你好，Bing。帮我搜索最近的新闻。"),
+            gr.Button.update(value="你好，Bing。你可以帮我做什么？", visible=True),
+            gr.Button.update(value="你好，Bing。请随便写一首诗。", visible=True),
+            gr.Button.update(value="你好，Bing。帮我搜索最近的新闻。", visible=True),
         )
 
     # 将清除按钮绑定到 clear.click() 方法上
