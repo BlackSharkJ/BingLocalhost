@@ -187,9 +187,9 @@ with gr.Blocks(css=my_css) as demo:
                 )
         match len(QUESTION):
             case 0:
-                gr.Button.update(visible=False), gr.Button.update(
+                return (gr.Button.update(visible=False), gr.Button.update(
                     visible=False
-                ), gr.Button.update(visible=False)
+                ), gr.Button.update(visible=False))
             case 1:
                 return (
                     history,
