@@ -30,9 +30,9 @@ async def get_message(message):
     try:
         rs = await cookieDict[IP][1](prompt=message)
     except httpcore.ConnectTimeout as exc:
-        return ["请求失败，请重试……", []]
+        return "请求失败，请重试……"
     except Exception as exc:
-        return ["请求失败，请重试……", []]
+        return "请求失败，请重试……"
     try:
         QUESTION = [_["text"] for _ in rs["item"]["messages"][1]["suggestedResponses"]]
     except KeyError:
