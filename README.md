@@ -8,6 +8,8 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅
 # 1. 基础准备
 - 安装[gradio](https://github.com/gradio-app/gradio)和[EdgeGPT](https://github.com/acheong08/EdgeGPT), [Markdown](https://github.com/Python-Markdown/markdown), [mdtex2html](https://github.com/polarwinkel/mdtex2html)这4个Python库
 
+> 有时候Bing的回答内容比较长，需要较长的等待时间，但是EdgeGPT默认的最长等待时间只有10秒，就容易出现错误。因此个人建议把EdgeGPT库的EdgeGPT.py中的self.session = httpx.Client这一行把timeout=10改为timeout=60,verify=False
+
 - 安装python 3.10+ or 您的python版本低于3.10，请修改main.py中的change_question函数。
 
 - 中国用户需要科学上网手段
