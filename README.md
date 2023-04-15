@@ -12,7 +12,7 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅
 
 - 安装python 3.10+ or 您的python版本低于3.10，请修改main.py中的change_question函数。
 
-- 中国用户需要科学上网手段，可以参考这个项目[free](https://github.com/freefq/free)
+- 中国用户需要科学上网手段，可以参考这个项目：[free](https://github.com/freefq/free)
 
 - 需要有可使用New Bing的账号，导出Cookie的方法请看[EdgeGPT](https://github.com/acheong08/EdgeGPT)
 
