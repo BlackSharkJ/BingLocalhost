@@ -29,6 +29,7 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅。
 
 ## 5. 在Windows系统创建venv虚拟环境
 1. 创建venv环境
+启动`CMD`或`PowerShell`，运行以下命令
 ```
 python3 -m venv C:\FilePath\ProjectName\venv
 ```
