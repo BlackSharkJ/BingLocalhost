@@ -40,11 +40,13 @@ python3 -m venv C:\FilePath\ProjectName\venv
 然后把本项目放在`C:\FilePath\ProjectName`目录下
 
 2. 进入虚拟环境
+
 在`C:\FilePath\ProjectName\venv\Scripts`目录中运行`CMD`或`PowerShell`
 或者启动`CMD`或`PowerShell`后把工作目录切换到`C:\FilePath\ProjectName\venv\Scripts`
 然后运行`activate.bat`文件启动虚拟环境
 
 3. 在虚拟环境中安装python库
+
 进入虚拟环境后您的命令行开头会带有`(venv)`标识，此时说明进入虚拟环境成功，然后安装Python库的方法和平常并无差别
 ```
 pip install gradio
