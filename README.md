@@ -24,11 +24,12 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅。
 ## 3. 配置Bing Cookie
 打开main.py，把存放Cookie的路径地址粘贴上去
 
-## 4. 运行main.py
+## 4.3. 运行main.py
 支持电脑和手机
 
 ## 5. 在Windows系统创建venv虚拟环境
 1. 创建venv环境
+
 启动`CMD`或`PowerShell`，运行以下命令
 ```
 python3 -m venv C:\FilePath\ProjectName\venv
@@ -53,6 +54,7 @@ pip install gradio
 ```
 
 4. 删除虚拟环境
+
 直接把`C:\FilePath\ProjectName\venv`删除即可
 
 ## 成果预览图
