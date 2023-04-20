@@ -19,7 +19,7 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅。
 - 需要有可使用New Bing的账号，导出Cookie的方法请看[EdgeGPT](https://github.com/acheong08/EdgeGPT)
 
 ## 2. 下载本项目文件
-下载后放到您喜欢的目录
+下载后解压并放到您喜欢的目录
 
 ## 3. 配置Bing Cookie
 打开main.py，把存放Cookie的路径地址粘贴上去
