@@ -53,6 +53,9 @@ pip install gradio
 4. 删除虚拟环境
 直接把`C:\FilePath\ProjectName\venv`删除即可
 
-#### 成果预览图
+## 成果预览图
 ![preview](/preview.png)
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=gG8Fkpxq/BingLocalhost&type=Date)](https://star-history.com/#gG8Fkpxq/BingLocalhost&Date)
