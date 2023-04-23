@@ -22,7 +22,7 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅。
 下载后解压缩，然后放到您喜欢的目录
 
 ## 3. 配置Bing Cookie
-打开main.py，把存放Cookie的路径地址粘贴上去
+打开`main.py`，把存放Cookie的路径地址粘贴上去
 
 ## 4. 运行main.py
 支持电脑和手机
