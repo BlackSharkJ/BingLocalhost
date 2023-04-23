@@ -48,7 +48,7 @@ python3 -m venv C:\FilePath\ProjectName\venv
 
 3. 在虚拟环境中安装python库
 
-进入虚拟环境后您的命令行开头会带有`(venv)`标识，此时说明进入虚拟环境成功，然后安装Python库的方法和平常并无差别
+进入虚拟环境后您的命令行开头会带有`(venv)`标识，此时说明进入虚拟环境成功，然后安装Python库的方法和平常并无差别，如：
 ```
 pip install gradio
 ```
