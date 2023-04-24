@@ -31,7 +31,7 @@ async def get_message(message):
     #rs = await cookieDict[IP][1](prompt=message)
     try:
         rs = await cookieDict[IP][1](prompt=message[33:-17])
-        print(rs)
+        # print(rs)
     # except httpcore.ConnectTimeout as exc:
     #     return "请求失败，请重试……"
     except Exception as exc:
