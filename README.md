@@ -13,7 +13,7 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅。
 
 > 有时候Bing的回答内容比较长，需要较长的等待时间，但是EdgeGPT默认的最长等待时间只有10秒，就容易出现错误。因此个人建议把EdgeGPT库的`EdgeGPT.py`中的`self.session = httpx.Client`这一行把`timeout=10`改为`timeout=60, verify=False`
 
-- 安装Python 3.10+ or 您的Python版本低于3.10（个人建议是使用单独的[venv](#5-在windows系统创建venv虚拟环境)虚拟环境运行运行本项目），请修改main.py中的change_question函数，把其中的match-case语句改为if-elif-else语句。
+- 安装Python 3.10+ or 您的Python版本低于3.10（个人建议是使用单独的[venv](#在windows系统创建venv虚拟环境)虚拟环境运行运行本项目），请修改main.py中的change_question函数，把其中的match-case语句改为if-elif-else语句。
 
 - 中国用户需要科学上网手段，可以参考这个项目：[free](https://github.com/freefq/free)
 
@@ -28,7 +28,7 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅。
 ## 4. 运行main.py
 支持电脑和手机
 
-## 5. 在Windows系统创建venv虚拟环境
+## 在Windows系统创建venv虚拟环境
 1. 创建venv环境
 
 启动`CMD`或`PowerShell`，运行以下命令
