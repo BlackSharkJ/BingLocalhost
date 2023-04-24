@@ -15,37 +15,50 @@ cookieList = [_ for _ in Path(cookiePath).iterdir()]
 cookieDict = {}  # {IP: [bot, Bing]}
 IP = ""
 QUESTION = []
-NumUserMessagesInConversation = []  # [max,Num]
+NumUserMessagesInConversation = [20, 1]  # [max,Num]
 gr.Chatbot.postprocess = postprocess
 # 读取css文件
-with open("./static/main.css", "r", encoding="utf-8") as f:
+with open(r"./static/main.css", "r", encoding="utf-8") as f:
     my_css = f.read()
-
+# 测试网络
+# Chatbot(random.choice(cookieList))
 
 async def get_message(message):
     """
     从Bing请求数据.
     """
     global QUESTION, NumUserMessagesInConversation
+    #rs = await cookieDict[IP][1](prompt=message)
     try:
         rs = await cookieDict[IP][1](prompt=message)
-    except httpcore.ConnectTimeout as exc:
-        return "请求失败，请重试……"
+    # except httpcore.ConnectTimeout as exc:
+    #     return "请求失败，请重试……"
     except Exception as exc:
+        print(rs)
         return "请求失败，请重试……"
     try:
         QUESTION = [_["text"] for _ in rs["item"]["messages"][1]["suggestedResponses"]]
     except KeyError:
+        print(rs)
         QUESTION = []
     except IndexError:
+        print(rs)
         QUESTION = []
     try:
         quotes = rs["item"]["messages"][1]["adaptiveCards"][0]["body"]
     except KeyError:
+        print(rs)
         quotes = []
     except IndexError:
+        print(rs)
         quotes = []
-
+    try:
+        NumUserMessagesInConversation = [
+            rs["item"]["throttling"]["maxNumUserMessagesInConversation"],
+            rs["item"]["throttling"]["numUserMessagesInConversation"],
+        ]
+    except:
+        print(rs)
     if quotes.__len__() == 1:
         body, quotes = quotes[0]["text"], []
     elif quotes.__len__() > 1:
@@ -69,10 +82,6 @@ async def get_message(message):
     else:
         body = ""
     body = re.sub(r"\[\^(\d+)\^\]", "", body)
-    NumUserMessagesInConversation = [
-        rs["item"]["throttling"]["maxNumUserMessagesInConversation"],
-        rs["item"]["throttling"]["numUserMessagesInConversation"],
-    ]
     return body
 
 
