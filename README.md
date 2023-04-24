@@ -24,9 +24,12 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅。
 
 ## 3. 配置Bing Cookie
 打开`main.py`，把存放Cookie的路径地址粘贴上去
+```
+cookiePath = r"./cookiePath"  # 填写存放Bing的cookies目录
+```
 
 ## 4. 运行main.py
-支持电脑和手机
+支持电脑和手机。如果您是在虚拟环境中创建的本项目，请先启动虚拟环境。
 
 ## 在Windows系统创建venv虚拟环境
 1. 创建venv环境
