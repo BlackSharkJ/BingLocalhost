@@ -6,7 +6,7 @@ from functools import partial
 from pathlib import Path
 
 import gradio as gr
-import httpcore
+# import httpcore
 from EdgeGPT import Chatbot, ConversationStyle
 from utils import postprocess
 
@@ -30,7 +30,8 @@ async def get_message(message):
     global QUESTION, NumUserMessagesInConversation
     #rs = await cookieDict[IP][1](prompt=message)
     try:
-        rs = await cookieDict[IP][1](prompt=message)
+        rs = await cookieDict[IP][1](prompt=message[33:-17])
+        print(rs)
     # except httpcore.ConnectTimeout as exc:
     #     return "请求失败，请重试……"
     except Exception as exc:
@@ -82,6 +83,7 @@ async def get_message(message):
     else:
         body = ""
     body = re.sub(r"\[\^(\d+)\^\]", "", body)
+    body += f"\n\n对话次数：{NumUserMessagesInConversation[1]}/{NumUserMessagesInConversation[0]}"
     return body
 
 
