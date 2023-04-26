@@ -23,7 +23,8 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅。
 下载后解压缩，然后放到您喜欢的目录
 
 ## 3. 配置Bing Cookie
-打开`main.py`，把存放Cookie的路径地址粘贴上去
+把用于存放Cookie的json文件放到一个单独的文件夹中，请确保这个文件夹中只有储存cookie的json文件
+打开`main.py`，存放cookie的文件夹路径地址粘贴上去
 ```python
 cookiePath = r"./cookiePath"  # 填写存放Bing的cookies目录
 ```
