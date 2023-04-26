@@ -10,8 +10,8 @@ import gradio as gr
 from EdgeGPT import Chatbot, ConversationStyle
 from utils import postprocess
 
-cookiePath = r"./cookiePath"  # 填写存放Bing的cookies目录
-cookieList = [_ for _ in Path(cookiePath).iterdir()]
+cookiePath = r"./cookiePath"  # 填写存放Bing的cookies目录，请确保这个文件夹中只有储存cookie的json文件
+cookieList = [_ for _ in Path(cookiePath).iterdir()]  # 如果您只有一个cookie并且不想因此单独创建一个目录用于保存cookie文件，可以把这行改为类似cookieList = [r"c:/your_cookie.json"]的形式
 cookieDict = {}  # {IP: [bot, Bing]}
 IP = ""
 QUESTION = []
