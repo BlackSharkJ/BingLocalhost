@@ -3,7 +3,7 @@ import re
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
-from typing import List, Tuple
+# from typing import List, Tuple
 
 from markdown import markdown
 import mdtex2html
@@ -11,10 +11,10 @@ import mdtex2html
 
 ALREADY_CONVERTED_MARK = "<!-- 已转换. -->"
 
-
-def postprocess(
-    self, y: List[Tuple[str | None, str | None]]
-) -> List[Tuple[str | None, str | None]]:
+# def postprocess(
+#     self, y: List[Tuple[str | None, str | None]]
+# ) -> List[Tuple[str | None, str | None]]:
+def postprocess(self, y):
     if y is None or y == []:
         return []
     user, bot = y[-1]
