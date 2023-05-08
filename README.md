@@ -27,7 +27,7 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅。
 
 打开`main.py`，存放cookie的文件夹路径地址粘贴上去
 ```python
-cookiePath = r"./cookiePath"  # 填写存放Bing的cookies目录
+cookiePath = r"./cookiePath"  # 填写存放Bing的cookies目录，请确保这个文件夹中只有储存cookie的json文件
 ```
 
 ## 4. 运行main.py
