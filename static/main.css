@@ -16,7 +16,7 @@
         max-height: calc(70vh - 180px - var(--line-sm)*1rem - 2*var(--block-label-margin) );
     }
 }
-
+/* 如果想让用户对话显示在右边，可以把这里的left改为right。但是这样是右对齐，而不是放在右边的左对齐。 */
 #chat_window .user {
     text-align: left
 }
