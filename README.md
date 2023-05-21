@@ -9,15 +9,22 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅。
 **如果您觉得本项目好用请帮忙点 Star**
 
 ## 1. 基础准备
-- 安装[gradio](https://github.com/gradio-app/gradio)和[EdgeGPT](https://github.com/acheong08/EdgeGPT), [Markdown](https://github.com/Python-Markdown/markdown), [mdtex2html](https://github.com/polarwinkel/mdtex2html)这4个Python库，安装方法请看这几个库的介绍，都非常简单。
+- 安装Python 3.10+ or 您的Python版本低于3.10（个人建议是使用单独的[venv](#在windows系统创建venv虚拟环境)虚拟环境运行运行本项目），请修改main.py中的change_question函数，把其中的match-case语句改为if-elif-else语句。
+
+- 安装[gradio](https://github.com/gradio-app/gradio)和[EdgeGPT](https://github.com/acheong08/EdgeGPT), [Markdown](https://github.com/Python-Markdown/markdown), [mdtex2html](https://github.com/polarwinkel/mdtex2html)这4个Python库，安装方法可以直接复制下方的命令，也可以看这几个库的主页，都非常简单。
+```
+pip install gradio EdgeGPT Markdown mdtex2html
+```
+如果以上命令安装速度很慢（尤其是中国用户），可以使用以下命令，或者参考这篇文章进行[换源](https://zhuanlan.zhihu.com/p/371539969)。
+```
+pip install gradio EdgeGPT Markdown mdtex2html -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
 
 > 有时候Bing的回答内容比较长，需要较长的等待时间，但是EdgeGPT默认的最长等待时间只有10秒，就容易出现错误。因此个人建议把EdgeGPT库的`EdgeGPT.py`中的`self.session = httpx.Client`这一行把`timeout=10`改为`timeout=60, verify=False`
 
-- 安装Python 3.10+ or 您的Python版本低于3.10（个人建议是使用单独的[venv](#在windows系统创建venv虚拟环境)虚拟环境运行运行本项目），请修改main.py中的change_question函数，把其中的match-case语句改为if-elif-else语句。
-
 - 中国用户需要科学上网手段，可以参考这个项目：[free](https://github.com/freefq/free)
 
-- 需要有可使用New Bing的账号，导出Cookie的方法请看[EdgeGPT](https://github.com/acheong08/EdgeGPT)
+- 需要有可使用New Bing的账号，导出Cookie的方法请看[EdgeGPT](https://github.com/acheong08/EdgeGPT)。如果您的微软账户无法使用New Bing，请直接重新注册一个，使用outlook邮箱即可，然后完成账号备用邮箱的安全验证（也可以使用outlook邮箱）。
 
 ## 2. 下载本项目文件
 下载后解压缩，然后放到您喜欢的目录
