@@ -9,7 +9,7 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅。
 **如果您觉得本项目好用请帮忙点 Star**
 
 ## 1. 基础准备
-- 安装Python 3.10+ or 您的Python版本低于3.10（个人建议是使用单独的[venv](#在windows系统创建venv虚拟环境)虚拟环境运行运行本项目），请修改main.py中的change_question函数，把其中的match-case语句改为if-elif-else语句。
+- 安装Python 3.10+ or 您的Python版本低于3.10，请修改main.py中的change_question函数，把其中的match-case语句改为if-elif-else语句。个人建议是安装好Python后，使用单独的[venv](#在windows系统创建venv虚拟环境)虚拟环境运行运行本项目。
 
 - 安装[gradio](https://github.com/gradio-app/gradio)和[EdgeGPT](https://github.com/acheong08/EdgeGPT), [Markdown](https://github.com/Python-Markdown/markdown), [mdtex2html](https://github.com/polarwinkel/mdtex2html)这4个Python库，安装方法可以直接复制下方的命令，也可以看这几个库的主页，都非常简单。
 ```
