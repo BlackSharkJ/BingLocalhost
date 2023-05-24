@@ -15,7 +15,7 @@ ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)，请原谅。
 ```
 pip install gradio EdgeGPT Markdown mdtex2html
 ```
-如果以上命令安装速度很慢（尤其是中国用户），可以使用以下命令，或者参考这篇文章进行[换源](https://zhuanlan.zhihu.com/p/371539969)。
+如果以上命令安装速度很慢（尤其是中国用户），可以使用以下命令，或者参考[这篇文章](https://zhuanlan.zhihu.com/p/371539969)进行换源。
 ```
 pip install gradio EdgeGPT Markdown mdtex2html -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
