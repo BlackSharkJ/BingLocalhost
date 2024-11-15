@@ -1,3 +1,6 @@
+# 此项目已存档
+因为ChatGPT发展得非常快，有很多其他很好的项目在持续更新，而我本人没有精力维护这个项目。
+
 # BingLocalhost
 ![preview](/preview.png)
 本项目基于[gradio](https://github.com/gradio-app/gradio)和[EdgeGPT](https://github.com/acheong08/EdgeGPT)，把Bing部署在本地局域网，一台电脑开代理，其他设备（包括移动设备）也能使用，轻松简单，无需重定向。
