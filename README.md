@@ -72,4 +72,5 @@ pip install gradio
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=gG8Fkpxq/BingLocalhost&type=Date)](https://star-history.com/#gG8Fkpxq/BingLocalhost&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=BlackSharkJ/BingLocalhost&type=Date)](https://star-history.com/#BlackSharkJ/BingLocalhost&Date)
+
